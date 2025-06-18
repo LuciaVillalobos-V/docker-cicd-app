@@ -23,7 +23,11 @@ jobs:
 
       - name: Build y Push imagen
         run: |
-          docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/docker-cicd-app:latest . --push
+          docker buildx build \
+            --platform linux/amd64 \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/docker-cicd-app:latest \
+            --push \
+            .
 
       - name: Desplegar en EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -37,4 +41,5 @@ jobs:
             docker stop app || true
             docker rm app || true
             docker run -d --name app -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/docker-cicd-app:latest
+
 
