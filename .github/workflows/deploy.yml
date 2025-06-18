@@ -22,8 +22,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build y Push imagen
-        run: >
-          docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/docker-cicd-app:latest --push .
+        run: |
+          docker buildx build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/docker-cicd-app:latest . --push
 
       - name: Desplegar en EC2
         uses: appleboy/ssh-action@v1.0.0
